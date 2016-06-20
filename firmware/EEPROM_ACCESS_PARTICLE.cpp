@@ -1,5 +1,4 @@
 #include "EEPROM_ACCESS_PARTICLE.h"
-#include "Particle.h"
 
 //typedef struct reading {
 //    String data;					//Assuming a maximum of 30 characters
@@ -86,19 +85,14 @@ void processData()
 			position = position - STRING_LEN;	//position is shifted to next data stored
 		}
 		
-		if(fail)						//breaks out of current data processing
+		if(success)
 		{
-			break;
+			position = 0;
+			
+			EEPROM.clear();					//clears all data in  EEPROM
+			EEPROM.put(5, position);		//sets initial position
+			EEPROM.put(0, NO_DATA_IN_EEP);		//indicates no data in EEPROM
 		}
-		
-		position = 0;
-		
-		EEPROM.clear();					//clears all data in  EEPROM
-		EEPROM.put(5, position);		//sets initial position
-		EEPROM.put(0, NO_DATA_IN_EEP);		//indicates no data in EEPROM
-		
 		//processQueue();					//processes data in correct order of stroage
-	}else{
-		break;							//no data in EEPROM
 	}
 }
