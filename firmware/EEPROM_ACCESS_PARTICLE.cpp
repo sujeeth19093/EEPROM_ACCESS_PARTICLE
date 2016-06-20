@@ -1,4 +1,5 @@
 #include "EEPROM_ACCESS_PARTICLE.h"
+#include "Particle.h"
 
 //typedef struct reading {
 //    String data;					//Assuming a maximum of 30 characters
