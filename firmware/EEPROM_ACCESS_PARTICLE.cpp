@@ -66,7 +66,7 @@ void processData()
 	if(status == DATA_IN_EEP)
 	{
 		int position;
-		String msg;
+		char msg[32];
 		boolean fail;
 		
 		EEPROM.get(5,position);			//Gets position of latestest data stored	
