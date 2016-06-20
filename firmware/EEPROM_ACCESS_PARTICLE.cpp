@@ -85,7 +85,7 @@ void processData()
 			position = position - STRING_LEN;	//position is shifted to next data stored
 		}
 		
-		if(success)
+		if(!fail)
 		{
 			position = 0;
 			
