@@ -73,7 +73,10 @@ void processData()
 		
 		while(position > 10)
 		{
-			EEPROM.get(position, msg);	//copies data
+			for(int j = 0; j < 32; j++)
+			{
+				EEPROM.get(position + j, msg[j]);	//copies data
+			}
 			boolean success = Particle.publish("colorinfo", msg);	//publishes data onto the cloud
 			if(!success)				//data to cloud transfer is unsuccesful
 			{
