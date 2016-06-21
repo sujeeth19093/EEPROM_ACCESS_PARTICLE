@@ -26,6 +26,7 @@ void storeData(String msg, int len)
 	}
 
 	EEPROM.put(offset, msg);
+	Serial.printf("%s\n", msg);//////////////////////////////////////////////////////////////
 	EEPROM.put(offset + len, '\0');
 
 	EEPROM.put(5, offset);			//Updates the start position
@@ -41,14 +42,15 @@ void processData()
 		int position = 10;
 		int limit;
 		String msg;
-		boolean fail;
+		boolean success;
 
-		EEPROM.get(5, limit);			//Gets position of latestest data stored
+		EEPROM.get(5, limit);			//Gets position of latest data stored
 
 		while(limit >= position)
 		{
 			EEPROM.get(position, msg);	//copies data
-			boolean success = Particle.publish("eeprom data", msg);	//publishes data onto the cloud
+			Serial.printf("%s\n", msg);//////////////////////////////////////////////////////////
+			success = Particle.publish("eeprom data", msg);	//publishes data onto the cloud
 			position = position + msg.length() + 1;	//position is shifted to next data stored
 		}
 
