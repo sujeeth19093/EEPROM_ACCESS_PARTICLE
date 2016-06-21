@@ -1,6 +1,6 @@
 {
     "name": "EEPROM_ACCESS_PARTICLE",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "author": "Sujeeth K Emmadi <sujeeth19093@gmail.com>",
     "license": "",
     "description": "Particle eeprom access"
