@@ -1,5 +1,6 @@
 #include "EEPROM_ACCESS_PARTICLE.h"
 
+String store_str;
 int status_store;
 int position_store;
 void storeData()
