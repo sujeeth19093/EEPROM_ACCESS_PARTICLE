@@ -30,7 +30,7 @@ void loop()
     {
       Particle.process();
     }
-    //boolean sent = Particle.publish("main", s1);
+    boolean sent = Particle.publish("main", store_str);
     delay(1000);
 
     if(Particle.connected())
