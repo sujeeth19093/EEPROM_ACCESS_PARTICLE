@@ -6,7 +6,9 @@
 #define DATA_IN_EEP 1
 #define NO_DATA_IN_EEP 0
 
-void storeData(String msg, int len);
+String store_str;
+
+void storeData();
 void processData();
 
 #endif
