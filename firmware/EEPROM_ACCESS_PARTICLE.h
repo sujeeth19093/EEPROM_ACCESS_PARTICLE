@@ -6,7 +6,7 @@
 #define DATA_IN_EEP 1
 #define NO_DATA_IN_EEP 0
 
-String store_str;
+extern String store_str;
 
 void storeData();
 void processData();
