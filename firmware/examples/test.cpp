@@ -2,26 +2,40 @@
 
 #include "EEPROM_ACCESS_PARTICLE/EEPROM_ACCESS_PARTICLE.h"
 
-String msg;
-int i;
+SYSTEM_MODE(MANUAL);
 
+char s[35];
+int i;
 void setup()
 {
-	i=0;
+    i = 0;
+    EEPROM.put(0,0);
+    Particle.connect();
 }
 
 void loop()
 {
-	sprintf(msg, "%d - This should keep repeating.", i);
-	i++;
-	boolean sent = Particle.publish("access_test", msg, PRIVATE);
-	
-	delay(1000);
-	
-	processData();
-	
-	if(!sent)
-	{
-		storeData(msg);
-	}
+  if(i % 4 == 0)
+    Particle.connect();
+
+   if(i % 5 == 0)
+    Particle.disconnect();
+
+    sprintf(s, "%d - repeat",i);
+    i++;
+
+    store_str = String(s);
+
+    if(Particle.connected())
+    {
+      Particle.process();
+    }
+    //boolean sent = Particle.publish("main", s1);
+    delay(1000);
+
+    if(Particle.connected())
+        processData();
+
+    if(!Particle.connected())
+        storeData();
 }
