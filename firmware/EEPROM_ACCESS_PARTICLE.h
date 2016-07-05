@@ -3,12 +3,13 @@
 
 #include "application.h"
 
-#define DATA_IN_EEP 1
-#define NO_DATA_IN_EEP 0
+#define NO_DATA_EEPROM 0 //indicates no data present in EEPROM
+#define DATA_IN_EEPROM 1 //indicates data present in EEPROM
 
-extern String store_str;
+#define BACK_APPEND 0 // indicates that data should append behind text
+#define FRONT_APPEND 1 // indicates that data should append in front of text
 
-void storeData();
-void processData();
+void store(float num);
+void process(String& text_process, String& event, int position_of_data);
 
 #endif
