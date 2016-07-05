@@ -1,41 +1,43 @@
 #include "Particle.h"
 
-#include "EEPROM_ACCESS_PARTICLE/EEPROM_ACCESS_PARTICLE.h"
-
 SYSTEM_MODE(MANUAL);
+SYSTEM_THREAD(ENABLED);
 
-char s[35];
-int i;
+
+char toPublish_m[10];
+String text = "- Value"; //text to accompany data
+String event = "e-test"; //name of event
+float num_m;  //data variable
+
 void setup()
 {
-    i = 0;
-    EEPROM.put(0,0);
-    Particle.connect();
+    //startup delay and initialization
+    delay(5000);
+    EEPROM.put(0, NO_DATA_EEPROM);
+    EEPROM.put(5,0);
+    num_m = 0;
+    WiFi.on(); //MANUAL requires code to turn WiFi module on
+    Particle.connect(); //Establishes connection to cloud
 }
 
 void loop()
 {
-  if(i % 4 == 0)
-    Particle.connect();
+      Particle.process(); //maintains connection with cloud, must be executed, at most, every 20s
+      if(waitFor(Particle.connected, 10000)) //checks if device is connected to cloud
+      {
+        Particle.process();
+        sprintf(toPublish_m, "%f - Value", num_m);
+        Serial.printf("%f - Main\r\n", num_m);
+        Particle.publish("main", toPublish_m);
+        delay(1000);
 
-   if(i % 5 == 0)
-    Particle.disconnect();
+            process(text, event, FRONT_APPEND); //processes eeprom stored data. sends text that data is appended to and event name
+      }
 
-    sprintf(s, "%d - repeat",i);
-    i++;
-
-    store_str = String(s);
-
-    if(Particle.connected())
-    {
-      Particle.process();
-    }
-    boolean sent = Particle.publish("main", store_str);
-    delay(1000);
-
-    if(Particle.connected())
-        processData();
-
-    if(!Particle.connected())
-        storeData();
+      if(!Particle.connected())
+      {
+        Serial.printf("Enter store condition\r\n");
+        store(num_m); //stores data in eeprom
+      }
+        num_m++;
 }
